@@ -73,7 +73,7 @@ jobs:
       run: |
         cd openwrt
         cd package/lean
-        git clone https://github.com/immortalwrt/luci/tree/master/applications/luci-app-msd_lite.git
+        git clone https://github.com/ximiTech/luci-app-msd_lite.git
 
     - name: 开启缓存
       uses: klever1988/cachewrtbuild@main
