@@ -16,10 +16,34 @@ sed -i '$a CONFIG_PHY_ROCKCHIP_INNO_USB3=y' target/linux/rockchip/armv8/config-5
 #删除feeds中的插件
 rm -rf ./feeds/packages/net/smartdns
 rm -rf ./feeds/luci/applications/luci-app-mosdns
+rm -rf feeds/packages/net/msd_lite
 
+# 添加额外插件
+svn export https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
 #更改design主题为白色
 sed -i 's/dark/light/g' feeds/luci/applications/luci-app-design-config/root/etc/config/design
 
+# msd_lite
+git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite package/luci-app-msd_lite
+git clone --depth=1 https://github.com/ximiTech/msd_lite package/msd_lite
+# iStore
+svn export https://github.com/linkease/istore-ui/trunk/app-store-ui package/app-store-ui
+svn export https://github.com/linkease/istore/trunk/luci package/luci-app-store
+# 在线用户
+svn export https://github.com/haiibo/packages/trunk/luci-app-onliner package/luci-app-onliner
+sed -i '$i uci set nlbwmon.@nlbwmon[0].refresh_interval=2s' package/lean/default-settings/files/zzz-default-settings
+sed -i '$i uci commit nlbwmon' package/lean/default-settings/files/zzz-default-settings
+chmod 755 package/luci-app-onliner/root/usr/share/onliner/setnlbw.sh
+# 修复 hostapd 报错
+#cp -f $GITHUB_WORKSPACE/scripts/011-fix-mbo-modules-build.patch package/network/services/hostapd/patches/011-fix-mbo-modules-build.patch
+# 修改 Makefile
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
+
+./scripts/feeds update -a
+./scripts/feeds install -a
 #克隆插件
 rm -rf feeds/ssrp/ipt2socks
 
@@ -44,9 +68,6 @@ git clone -b main https://github.com/xiaorouji/openwrt-passwall2.git
 #git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns.git
 #openclash
 git clone -b master --depth 1 https://github.com/vernesong/OpenClash.git
-#msd_lite
-#rm -rf feeds/packages/net/msd_lite
-#git clone https://github.com/ximiTech/msd_lite.git feeds/packages/net/msd_lite
-#git clone -b main https://github.com/bauw2008/luci-app-msd.git
+
 
 popd
