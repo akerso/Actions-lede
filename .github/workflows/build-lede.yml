@@ -29,6 +29,7 @@ env:
   CLASH_CORE: scripts/preset-clash-core-arm64.sh
   R8152_PATCH: patchs/lede/r8152/100-add-LED-configuration-from-OF.patch
   UBOOT_PATCH: patchs/lede/uboot/9999-add-missing-parameters-for-LTS.patch
+  TARGET_PATCH: patchs/lede/target/9998-add-missing-parameters-for-LTS.patch
   USB3_FILE: patchs/lede/target/files/phy-rockchip-inno-usb3.c
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
