@@ -34,8 +34,13 @@ git clone -b master --depth 1 https://github.com/immortalwrt/homeproxy.git
 git clone -b main --depth 1 https://github.com/gdy666/luci-app-lucky.git
 
 # rtp2httpd
-git_clone https://github.com/stackia/rtp2httpd/tree/a4b897b97fa890b290e6b609f4c06c48413436b3/openwrt-support/luci-app-rtp2httpd
-git_clone https://github.com/stackia/rtp2httpd/tree/a4b897b97fa890b290e6b609f4c06c48413436b3/openwrt-support/rtp2httpd
+git clone https://github.com/stackia/rtp2httpd.git
+cd rtp2httpd
+# 用预生成的 Makefile 替换原始 Makefile（已包含固定版本号、源码下载地址和 PKG_HASH）
+mv openwrt-support/rtp2httpd/Makefile.versioned openwrt-support/rtp2httpd/Makefile
+mv openwrt-support/luci-app-rtp2httpd/Makefile.versioned openwrt-support/luci-app-rtp2httpd/Makefile
+# 将 openwrt-support 目录内容复制到你的 feeds 仓库
+cp -r openwrt-support/* /path/to/your/feeds/
 
 # smartdns
 git clone -b master --depth 1 https://github.com/pymumu/luci-app-smartdns.git
