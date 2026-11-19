@@ -33,6 +33,10 @@ git clone -b master --depth 1 https://github.com/immortalwrt/homeproxy.git
 # lucky
 git clone -b main --depth 1 https://github.com/gdy666/luci-app-lucky.git
 
+# rtp2httpd
+git_clone https://github.com/stackia/rtp2httpd/tree/a4b897b97fa890b290e6b609f4c06c48413436b3/openwrt-support/luci-app-rtp2httpd
+git_clone https://github.com/stackia/rtp2httpd/tree/a4b897b97fa890b290e6b609f4c06c48413436b3/openwrt-support/rtp2httpd
+
 # smartdns
 git clone -b master --depth 1 https://github.com/pymumu/luci-app-smartdns.git
 git clone -b master --depth 1 https://github.com/pymumu/smartdns.git
